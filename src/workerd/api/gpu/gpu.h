@@ -5,7 +5,10 @@
 #pragma once
 
 #include "gpu-adapter.h"
+#include "gpu-bindgroup-layout.h"
+#include "gpu-bindgroup.h"
 #include "gpu-device.h"
+#include "gpu-sampler.h"
 #include "gpu-utils.h"
 #include <dawn/native/DawnNative.h>
 #include <webgpu/webgpu_cpp.h>
@@ -33,6 +36,9 @@ public:
       api::gpu::GPUBindGroupLayoutEntry,                                       \
       api::gpu::GPUStorageTextureBindingLayout,                                \
       api::gpu::GPUTextureBindingLayout, api::gpu::GPUSamplerBindingLayout,    \
-      api::gpu::GPUBufferBindingLayout, api::gpu::GPUBindGroupLayout
+      api::gpu::GPUBufferBindingLayout, api::gpu::GPUBindGroupLayout,          \
+      api::gpu::GPUBindGroup, api::gpu::GPUBindGroupDescriptor,                \
+      api::gpu::GPUBindGroupEntry, api::gpu::GPUBufferBinding,                 \
+      api::gpu::GPUSampler, api::gpu::GPUSamplerDescriptor
 
 }; // namespace workerd::api::gpu

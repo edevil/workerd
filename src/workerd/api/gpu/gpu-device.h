@@ -5,6 +5,7 @@
 #pragma once
 
 #include "gpu-bindgroup-layout.h"
+#include "gpu-bindgroup.h"
 #include "gpu-buffer.h"
 #include <dawn/native/DawnNative.h>
 #include <webgpu/webgpu_cpp.h>
@@ -17,12 +18,14 @@ class GPUDevice : public jsg::Object {
   jsg::Ref<GPUBuffer> createBuffer(jsg::Lock &, GPUBufferDescriptor);
   jsg::Ref<GPUBindGroupLayout>
   createBindGroupLayout(GPUBindGroupLayoutDescriptor descriptor);
+  jsg::Ref<GPUBindGroup> createBindGroup(GPUBindGroupDescriptor descriptor);
 
 public:
   explicit GPUDevice(wgpu::Device d) : device_(d){};
   JSG_RESOURCE_TYPE(GPUDevice) {
     JSG_METHOD(createBuffer);
     JSG_METHOD(createBindGroupLayout);
+    JSG_METHOD(createBindGroup);
   }
 };
 

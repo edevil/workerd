@@ -6,6 +6,7 @@
 #include "gpu-bindgroup-layout.h"
 #include "gpu-buffer.h"
 #include "gpu-utils.h"
+#include "workerd/api/gpu/gpu-bindgroup.h"
 
 namespace workerd::api::gpu {
 
@@ -29,7 +30,7 @@ GPUDevice::createBindGroupLayout(GPUBindGroupLayoutDescriptor descriptor) {
   }
 
   kj::Vector<wgpu::BindGroupLayoutEntry> layoutEntries;
-  for (auto& e : descriptor.entries) {
+  for (auto &e : descriptor.entries) {
     layoutEntries.add(parseBindGroupLayoutEntry(e));
   }
   desc.entries = layoutEntries.begin();
@@ -37,6 +38,16 @@ GPUDevice::createBindGroupLayout(GPUBindGroupLayoutDescriptor descriptor) {
 
   auto bindGroupLayout = device_.CreateBindGroupLayout(&desc);
   return jsg::alloc<GPUBindGroupLayout>(kj::mv(bindGroupLayout));
+}
+
+jsg::Ref<GPUBindGroup>
+GPUDevice::createBindGroup(GPUBindGroupDescriptor descriptor) {
+  wgpu::BindGroupDescriptor desc{};
+
+  // TODO
+
+  auto bindGroup = device_.CreateBindGroup(&desc);
+  return jsg::alloc<GPUBindGroup>(kj::mv(bindGroup));
 }
 
 } // namespace workerd::api::gpu

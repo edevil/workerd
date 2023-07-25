@@ -21,6 +21,10 @@ using GPUBufferUsageFlags = uint32_t;
 using GPUFlagsConstant = uint32_t;
 using GPUShaderStageFlags = uint32_t;
 using GPUIndex32 = uint32_t;
+using GPUAddressMode = kj::String;
+using GPUFilterMode = kj::String;
+using GPUMipmapFilterMode = kj::String;
+using GPUCompareFunction = kj::String;
 
 struct GPUShaderStage : public jsg::Object {
   static constexpr GPUFlagsConstant VERTEX = 0x1;
