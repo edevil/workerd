@@ -19,8 +19,8 @@ kj::ArrayPtr<kj::byte>
 GPUBuffer::getMappedRange(jsg::Optional<GPUSize64> offset,
                           jsg::Optional<GPUSize64> size) {
 
-  KJ_REQUIRE(state_ == State::Mapped || state_ == State::MappedAtCreation,
-             "trying to get mapped range of unmapped buffer");
+  JSG_REQUIRE(state_ == State::Mapped || state_ == State::MappedAtCreation,
+              TypeError, "trying to get mapped range of unmapped buffer");
 
   uint64_t o = 0;
   KJ_IF_MAYBE (real_offset, offset) {
@@ -44,7 +44,7 @@ GPUBuffer::getMappedRange(jsg::Optional<GPUSize64> offset,
                   ? buffer_.GetMappedRange(o, s)
                   : const_cast<void *>(buffer_.GetConstMappedRange(o, s));
 
-  KJ_REQUIRE(ptr, "could not obtain mapped range");
+  JSG_REQUIRE(ptr, TypeError, "could not obtain mapped range");
 
   auto arrayBuffer = kj::arrayPtr((byte *)ptr, s);
   mapped_.add(Mapping{start, end, arrayBuffer});

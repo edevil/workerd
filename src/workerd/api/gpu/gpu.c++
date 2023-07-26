@@ -8,6 +8,11 @@
 namespace workerd::api::gpu {
 
 void initialize() {
+
+#if !defined(_WIN32) && !defined(__linux__) && !defined(__APPLE__)
+  KJ_FAIL_REQUIRE("unsupported platform for webgpu");
+#endif
+
   // Dawn native initialization. Dawn proc allows us to point the webgpu methods
   // to different implementations such as native, wire, or our custom
   // implementation. For now we will use the native version but in the future we
@@ -29,12 +34,12 @@ GPU::requestAdapter(jsg::Lock &js) {
 #elif defined(__APPLE__)
   constexpr auto defaultBackendType = wgpu::BackendType::Metal;
 #else
-  KJ_FAIL_REQUIRE("Unsupported platform");
+  KJ_UNREACHABLE;
 #endif
 
   auto adapters = instance_.GetAdapters();
   if (adapters.empty()) {
-    return NULL;
+    return nullptr;
   }
 
   kj::Maybe<dawn::native::Adapter> adapter = nullptr;
@@ -55,7 +60,7 @@ GPU::requestAdapter(jsg::Lock &js) {
   }
 
   // We did not find an adapter that matched what we wanted
-  return NULL;
+  return nullptr;
 }
 
 } // namespace workerd::api::gpu
