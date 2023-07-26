@@ -6,6 +6,7 @@
 
 #include "gpu-bindgroup-layout.h"
 #include "gpu-buffer.h"
+#include "gpu-sampler.h"
 #include "gpu-utils.h"
 #include <webgpu/webgpu_cpp.h>
 #include <workerd/jsg/jsg.h>
@@ -28,9 +29,8 @@ struct GPUBufferBinding {
   JSG_STRUCT(buffer, offset, size);
 };
 
-// TODO using GPUBindingResource = kj::OneOf<GPUSampler, GPUTextureView,
-// GPUBufferBinding, GPUExternalTexture>;
-using GPUBindingResource = kj::OneOf<GPUBufferBinding>;
+// TODO add GPUTextureView and GPUExternalTexture
+using GPUBindingResource = kj::OneOf<GPUBufferBinding, jsg::Ref<GPUSampler>>;
 
 struct GPUBindGroupEntry {
   GPUIndex32 binding;
@@ -46,5 +46,7 @@ struct GPUBindGroupDescriptor {
 
   JSG_STRUCT(label, layout, entries);
 };
+
+wgpu::BindGroupEntry parseBindGroupEntry(GPUBindGroupEntry &);
 
 } // namespace workerd::api::gpu

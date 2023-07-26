@@ -14,11 +14,15 @@ class GPUSampler : public jsg::Object {
   wgpu::Sampler sampler_;
 
 public:
+  // Implicit cast operator to Dawn GPU object
+  inline operator const wgpu::Sampler &() const { return sampler_; }
+
   explicit GPUSampler(wgpu::Sampler s) : sampler_(s){};
   JSG_RESOURCE_TYPE(GPUSampler) {}
 };
 
 struct GPUSamplerDescriptor {
+  jsg::Optional<kj::String> label;
   jsg::Optional<GPUAddressMode> addressModeU;
   jsg::Optional<GPUAddressMode> addressModeV;
   jsg::Optional<GPUAddressMode> addressModeW;
@@ -30,8 +34,9 @@ struct GPUSamplerDescriptor {
   GPUCompareFunction compare;
   jsg::Optional<uint16_t> maxAnisotropy;
 
-  JSG_STRUCT(addressModeU, addressModeV, addressModeW, magFilter, minFilter,
-             mipmapFilter, lodMinClamp, lodMaxClamp, compare, maxAnisotropy);
+  JSG_STRUCT(label, addressModeU, addressModeV, addressModeW, magFilter,
+             minFilter, mipmapFilter, lodMinClamp, lodMaxClamp, compare,
+             maxAnisotropy);
 };
 
 } // namespace workerd::api::gpu

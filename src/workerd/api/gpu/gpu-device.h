@@ -7,6 +7,7 @@
 #include "gpu-bindgroup-layout.h"
 #include "gpu-bindgroup.h"
 #include "gpu-buffer.h"
+#include "gpu-sampler.h"
 #include <dawn/native/DawnNative.h>
 #include <webgpu/webgpu_cpp.h>
 #include <workerd/jsg/jsg.h>
@@ -19,6 +20,7 @@ class GPUDevice : public jsg::Object {
   jsg::Ref<GPUBindGroupLayout>
   createBindGroupLayout(GPUBindGroupLayoutDescriptor descriptor);
   jsg::Ref<GPUBindGroup> createBindGroup(GPUBindGroupDescriptor descriptor);
+  jsg::Ref<GPUSampler> createSampler(GPUSamplerDescriptor descriptor);
 
 public:
   explicit GPUDevice(wgpu::Device d) : device_(d){};
@@ -26,6 +28,7 @@ public:
     JSG_METHOD(createBuffer);
     JSG_METHOD(createBindGroupLayout);
     JSG_METHOD(createBindGroup);
+    JSG_METHOD(createSampler);
   }
 };
 

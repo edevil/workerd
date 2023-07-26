@@ -39,6 +39,8 @@ class GPUBuffer : public jsg::Object {
   void unmap();
 
 public:
+  // Implicit cast operator to Dawn GPU object
+  inline operator const wgpu::Buffer &() const { return buffer_; }
   explicit GPUBuffer(wgpu::Buffer, wgpu::BufferDescriptor);
 
   JSG_RESOURCE_TYPE(GPUBuffer) {
