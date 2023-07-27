@@ -200,4 +200,21 @@ GPUDevice::createBindGroup(GPUBindGroupDescriptor descriptor) {
   return jsg::alloc<GPUBindGroup>(kj::mv(bindGroup));
 }
 
+jsg::Ref<GPUShaderModule>
+GPUDevice::createShaderModule(GPUShaderModuleDescriptor descriptor) {
+  wgpu::ShaderModuleDescriptor desc{};
+  wgpu::ShaderModuleWGSLDescriptor wgsl_desc{};
+  desc.nextInChain = &wgsl_desc;
+
+  KJ_IF_MAYBE (label, descriptor.label) {
+    desc.label = label->cStr();
+  }
+
+  wgsl_desc.code = descriptor.code.cStr();
+
+  auto shader = device_.CreateShaderModule(&desc);
+  return jsg::alloc<GPUShaderModule>(kj::mv(shader));
+}
+
+
 } // namespace workerd::api::gpu

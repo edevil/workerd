@@ -8,6 +8,7 @@
 #include "gpu-bindgroup.h"
 #include "gpu-buffer.h"
 #include "gpu-sampler.h"
+#include "gpu-shader-module.h"
 #include <dawn/native/DawnNative.h>
 #include <webgpu/webgpu_cpp.h>
 #include <workerd/jsg/jsg.h>
@@ -22,6 +23,7 @@ public:
     JSG_METHOD(createBindGroupLayout);
     JSG_METHOD(createBindGroup);
     JSG_METHOD(createSampler);
+    JSG_METHOD(createShaderModule);
   }
 
 private:
@@ -31,6 +33,7 @@ private:
   createBindGroupLayout(GPUBindGroupLayoutDescriptor descriptor);
   jsg::Ref<GPUBindGroup> createBindGroup(GPUBindGroupDescriptor descriptor);
   jsg::Ref<GPUSampler> createSampler(GPUSamplerDescriptor descriptor);
+  jsg::Ref<GPUShaderModule> createShaderModule(GPUShaderModuleDescriptor descriptor);
 };
 
 struct GPUQueueDescriptor {

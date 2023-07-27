@@ -9,6 +9,7 @@
 #include "gpu-bindgroup.h"
 #include "gpu-device.h"
 #include "gpu-sampler.h"
+#include "gpu-shader-module.h"
 #include "gpu-utils.h"
 #include <dawn/native/DawnNative.h>
 #include <webgpu/webgpu_cpp.h>
@@ -40,6 +41,7 @@ private:
       api::gpu::GPUBufferBindingLayout, api::gpu::GPUBindGroupLayout,          \
       api::gpu::GPUBindGroup, api::gpu::GPUBindGroupDescriptor,                \
       api::gpu::GPUBindGroupEntry, api::gpu::GPUBufferBinding,                 \
-      api::gpu::GPUSampler, api::gpu::GPUSamplerDescriptor
+      api::gpu::GPUSampler, api::gpu::GPUSamplerDescriptor,                    \
+      api::gpu::GPUShaderModule, api::gpu::GPUShaderModuleDescriptor
 
 }; // namespace workerd::api::gpu
