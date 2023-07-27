@@ -10,6 +10,7 @@
 #include "gpu-pipeline-layout.h"
 #include "gpu-sampler.h"
 #include "gpu-shader-module.h"
+#include "gpu-compute-pipeline.h"
 #include <dawn/native/DawnNative.h>
 #include <webgpu/webgpu_cpp.h>
 #include <workerd/jsg/jsg.h>
@@ -26,6 +27,7 @@ public:
     JSG_METHOD(createSampler);
     JSG_METHOD(createShaderModule);
     JSG_METHOD(createPipelineLayout);
+    JSG_METHOD(createComputePipeline);
   }
 
 private:
@@ -39,6 +41,8 @@ private:
   createShaderModule(GPUShaderModuleDescriptor descriptor);
   jsg::Ref<GPUPipelineLayout>
   createPipelineLayout(GPUPipelineLayoutDescriptor descriptor);
+  jsg::Ref<GPUComputePipeline>
+  createComputePipeline(GPUComputePipelineDescriptor descriptor);
 };
 
 struct GPUQueueDescriptor {

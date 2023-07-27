@@ -7,6 +7,7 @@
 #include "gpu-adapter.h"
 #include "gpu-bindgroup-layout.h"
 #include "gpu-bindgroup.h"
+#include "gpu-compute-pipeline.h"
 #include "gpu-device.h"
 #include "gpu-pipeline-layout.h"
 #include "gpu-sampler.h"
@@ -44,6 +45,8 @@ private:
       api::gpu::GPUBindGroupEntry, api::gpu::GPUBufferBinding,                 \
       api::gpu::GPUSampler, api::gpu::GPUSamplerDescriptor,                    \
       api::gpu::GPUShaderModule, api::gpu::GPUShaderModuleDescriptor,          \
-      api::gpu::GPUPipelineLayout, api::gpu::GPUPipelineLayoutDescriptor
+      api::gpu::GPUPipelineLayout, api::gpu::GPUPipelineLayoutDescriptor,      \
+      api::gpu::GPUComputePipeline, api::gpu::GPUComputePipelineDescriptor,    \
+      api::gpu::GPUProgrammableStage
 
 }; // namespace workerd::api::gpu

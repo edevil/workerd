@@ -8,6 +8,7 @@
 #include "gpu-buffer.h"
 #include "gpu-sampler.h"
 #include "gpu-utils.h"
+#include "workerd/jsg/exception.h"
 
 namespace workerd::api::gpu {
 
@@ -225,7 +226,7 @@ GPUDevice::createPipelineLayout(GPUPipelineLayoutDescriptor descriptor) {
   }
 
   kj::Vector<wgpu::BindGroupLayout> bindGroupLayouts;
-  for (auto &l: descriptor.bindGroupLayouts) {
+  for (auto &l : descriptor.bindGroupLayouts) {
     bindGroupLayouts.add(*l);
   }
 
@@ -234,6 +235,45 @@ GPUDevice::createPipelineLayout(GPUPipelineLayoutDescriptor descriptor) {
 
   auto layout = device_.CreatePipelineLayout(&desc);
   return jsg::alloc<GPUPipelineLayout>(kj::mv(layout));
+}
+
+jsg::Ref<GPUComputePipeline>
+GPUDevice::createComputePipeline(GPUComputePipelineDescriptor descriptor) {
+  wgpu::ComputePipelineDescriptor desc{};
+  wgpu::ProgrammableStageDescriptor ps_desc{};
+  desc.compute = ps_desc;
+
+  KJ_IF_MAYBE (label, descriptor.label) {
+    desc.label = label->cStr();
+  }
+
+  ps_desc.entryPoint = descriptor.compute.entryPoint.cStr();
+  ps_desc.module = *descriptor.compute.module;
+
+  kj::Vector<wgpu::ConstantEntry> constants;
+  KJ_IF_MAYBE (cDict, descriptor.compute.constants) {
+    for (auto &f : cDict->fields) {
+      wgpu::ConstantEntry e;
+      e.key = f.name.cStr();
+      e.value = f.value;
+      constants.add(kj::mv(e));
+    }
+  }
+
+  ps_desc.constants = constants.begin();
+  ps_desc.constantCount = constants.size();
+
+  KJ_SWITCH_ONEOF(descriptor.layout) {
+    KJ_CASE_ONEOF(autoLayoutMode, kj::String) {
+      JSG_FAIL_REQUIRE(TypeError, "autolayout is not implemented");
+    }
+    KJ_CASE_ONEOF(layout, jsg::Ref<GPUPipelineLayout>) {
+      desc.layout = *layout;
+    }
+  }
+
+  auto pipeline = device_.CreateComputePipeline(&desc);
+  return jsg::alloc<GPUComputePipeline>(kj::mv(pipeline));
 }
 
 } // namespace workerd::api::gpu
