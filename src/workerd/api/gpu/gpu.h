@@ -8,6 +8,7 @@
 #include "gpu-bindgroup-layout.h"
 #include "gpu-bindgroup.h"
 #include "gpu-device.h"
+#include "gpu-pipeline-layout.h"
 #include "gpu-sampler.h"
 #include "gpu-shader-module.h"
 #include "gpu-utils.h"
@@ -42,6 +43,7 @@ private:
       api::gpu::GPUBindGroup, api::gpu::GPUBindGroupDescriptor,                \
       api::gpu::GPUBindGroupEntry, api::gpu::GPUBufferBinding,                 \
       api::gpu::GPUSampler, api::gpu::GPUSamplerDescriptor,                    \
-      api::gpu::GPUShaderModule, api::gpu::GPUShaderModuleDescriptor
+      api::gpu::GPUShaderModule, api::gpu::GPUShaderModuleDescriptor,          \
+      api::gpu::GPUPipelineLayout, api::gpu::GPUPipelineLayoutDescriptor
 
 }; // namespace workerd::api::gpu

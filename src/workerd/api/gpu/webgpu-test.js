@@ -156,5 +156,17 @@ export const read_sync_stack = {
     `,
     });
     ok(shaderModule);
+
+    // Pipeline setup
+    const computePipeline = device.createComputePipeline({
+      layout: device.createPipelineLayout({
+        bindGroupLayouts: [bindGroupLayout],
+      }),
+      compute: {
+        module: shaderModule,
+        entryPoint: "main",
+      },
+    });
+    ok(computePipeline);
   },
 };

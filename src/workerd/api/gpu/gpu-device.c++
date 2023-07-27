@@ -216,5 +216,24 @@ GPUDevice::createShaderModule(GPUShaderModuleDescriptor descriptor) {
   return jsg::alloc<GPUShaderModule>(kj::mv(shader));
 }
 
+jsg::Ref<GPUPipelineLayout>
+GPUDevice::createPipelineLayout(GPUPipelineLayoutDescriptor descriptor) {
+  wgpu::PipelineLayoutDescriptor desc{};
+
+  KJ_IF_MAYBE (label, descriptor.label) {
+    desc.label = label->cStr();
+  }
+
+  kj::Vector<wgpu::BindGroupLayout> bindGroupLayouts;
+  for (auto &l: descriptor.bindGroupLayouts) {
+    bindGroupLayouts.add(*l);
+  }
+
+  desc.bindGroupLayouts = bindGroupLayouts.begin();
+  desc.bindGroupLayoutCount = bindGroupLayouts.size();
+
+  auto layout = device_.CreatePipelineLayout(&desc);
+  return jsg::alloc<GPUPipelineLayout>(kj::mv(layout));
+}
 
 } // namespace workerd::api::gpu
