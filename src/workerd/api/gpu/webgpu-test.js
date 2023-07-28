@@ -175,5 +175,7 @@ export const read_sync_stack = {
 
     const passEncoder = commandEncoder.beginComputePass();
     ok(passEncoder);
+    passEncoder.setPipeline(computePipeline);
+
   },
 };

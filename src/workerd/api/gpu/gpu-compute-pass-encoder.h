@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "gpu-compute-pipeline.h"
 #include "gpu-query-set.h"
 #include "gpu-utils.h"
 #include <webgpu/webgpu_cpp.h>
@@ -15,10 +16,11 @@ class GPUComputePassEncoder : public jsg::Object {
 public:
   explicit GPUComputePassEncoder(wgpu::ComputePassEncoder e)
       : encoder_(kj::mv(e)){};
-  JSG_RESOURCE_TYPE(GPUComputePassEncoder) {}
+  JSG_RESOURCE_TYPE(GPUComputePassEncoder) { JSG_METHOD(setPipeline); }
 
 private:
   wgpu::ComputePassEncoder encoder_;
+  void setPipeline(jsg::Ref<GPUComputePipeline> pipeline);
 };
 
 struct GPUComputePassTimestampWrite {
@@ -37,6 +39,7 @@ struct GPUComputePassDescriptor {
   JSG_STRUCT(label, timestampWrites);
 };
 
-wgpu::ComputePassTimestampLocation parseComputePassTimestampLocation(kj::StringPtr location);
+wgpu::ComputePassTimestampLocation
+parseComputePassTimestampLocation(kj::StringPtr location);
 
 } // namespace workerd::api::gpu

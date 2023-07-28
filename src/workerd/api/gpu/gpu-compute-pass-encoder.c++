@@ -6,6 +6,10 @@
 
 namespace workerd::api::gpu {
 
+void GPUComputePassEncoder::setPipeline(jsg::Ref<GPUComputePipeline> pipeline) {
+  encoder_.SetPipeline(*pipeline);
+}
+
 wgpu::ComputePassTimestampLocation
 parseComputePassTimestampLocation(kj::StringPtr location) {
   if (location == "beginning") {
