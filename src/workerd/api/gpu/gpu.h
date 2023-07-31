@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "gpu-command-buffer.h"
 #include "gpu-adapter.h"
 #include "gpu-bindgroup-layout.h"
 #include "gpu-bindgroup.h"
@@ -53,6 +54,7 @@ private:
       api::gpu::GPUProgrammableStage, api::gpu::GPUCommandEncoder,             \
       api::gpu::GPUCommandEncoderDescriptor, api::gpu::GPUComputePassEncoder,  \
       api::gpu::GPUComputePassDescriptor, api::gpu::GPUQuerySet,               \
-      api::gpu::GPUQuerySetDescriptor, api::gpu::GPUComputePassTimestampWrite
+      api::gpu::GPUQuerySetDescriptor, api::gpu::GPUComputePassTimestampWrite, \
+      api::gpu::GPUCommandBufferDescriptor, api::gpu::GPUCommandBuffer
 
 }; // namespace workerd::api::gpu

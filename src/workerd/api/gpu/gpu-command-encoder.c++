@@ -3,8 +3,23 @@
 //     https://opensource.org/licenses/Apache-2.0
 
 #include "gpu-command-encoder.h"
+#include "gpu-command-buffer.h"
 
 namespace workerd::api::gpu {
+
+jsg::Ref<GPUCommandBuffer> GPUCommandEncoder::finish(
+    jsg::Optional<GPUCommandBufferDescriptor> descriptor) {
+  wgpu::CommandBufferDescriptor desc{};
+
+  KJ_IF_MAYBE (d, descriptor) {
+    KJ_IF_MAYBE (label, d->label) {
+      desc.label = label->cStr();
+    }
+  }
+
+  auto buffer = encoder_.Finish(&desc);
+  return jsg::alloc<GPUCommandBuffer>(kj::mv(buffer));
+};
 
 void GPUCommandEncoder::copyBufferToBuffer(jsg::Ref<GPUBuffer> source,
                                            GPUSize64 sourceOffset,

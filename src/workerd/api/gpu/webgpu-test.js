@@ -198,5 +198,9 @@ export const read_sync_stack = {
       0 /* destination offset */,
       resultMatrixBufferSize /* size */
     );
+
+    // Submit GPU commands.
+    const gpuCommands = commandEncoder.finish();
+    ok(gpuCommands);
   },
 };
