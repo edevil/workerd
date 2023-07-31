@@ -177,5 +177,9 @@ export const read_sync_stack = {
     ok(passEncoder);
     passEncoder.setPipeline(computePipeline);
     passEncoder.setBindGroup(0, bindGroup);
+
+    const workgroupCountX = Math.ceil(firstMatrix[0] / 8);
+    const workgroupCountY = Math.ceil(secondMatrix[1] / 8);
+    passEncoder.dispatchWorkgroups(workgroupCountX, workgroupCountY);
   },
 };

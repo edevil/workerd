@@ -10,6 +10,23 @@ void GPUComputePassEncoder::setPipeline(jsg::Ref<GPUComputePipeline> pipeline) {
   encoder_.SetPipeline(*pipeline);
 }
 
+void GPUComputePassEncoder::dispatchWorkgroups(
+    GPUSize32 workgroupCountX, jsg::Optional<GPUSize32> workgroupCountY,
+    jsg::Optional<GPUSize32> workgroupCountZ) {
+
+  GPUSize32 countY = 1;
+  KJ_IF_MAYBE (y, workgroupCountY) {
+    countY = *y;
+  }
+
+  GPUSize32 countZ = 1;
+  KJ_IF_MAYBE (z, workgroupCountZ) {
+    countZ = *z;
+  }
+
+  encoder_.DispatchWorkgroups(workgroupCountX, countY, countZ);
+}
+
 void GPUComputePassEncoder::setBindGroup(
     GPUIndex32 index, kj::Maybe<jsg::Ref<GPUBindGroup>> bindGroup,
     jsg::Optional<kj::Array<GPUBufferDynamicOffset>> dynamicOffsets) {
