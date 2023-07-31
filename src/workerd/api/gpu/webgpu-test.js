@@ -181,5 +181,6 @@ export const read_sync_stack = {
     const workgroupCountX = Math.ceil(firstMatrix[0] / 8);
     const workgroupCountY = Math.ceil(secondMatrix[1] / 8);
     passEncoder.dispatchWorkgroups(workgroupCountX, workgroupCountY);
+    passEncoder.end();
   },
 };

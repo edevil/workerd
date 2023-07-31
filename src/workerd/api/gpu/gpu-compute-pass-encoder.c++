@@ -27,6 +27,8 @@ void GPUComputePassEncoder::dispatchWorkgroups(
   encoder_.DispatchWorkgroups(workgroupCountX, countY, countZ);
 }
 
+void GPUComputePassEncoder::end() { encoder_.End(); }
+
 void GPUComputePassEncoder::setBindGroup(
     GPUIndex32 index, kj::Maybe<jsg::Ref<GPUBindGroup>> bindGroup,
     jsg::Optional<kj::Array<GPUBufferDynamicOffset>> dynamicOffsets) {
