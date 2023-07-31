@@ -6,6 +6,16 @@
 
 namespace workerd::api::gpu {
 
+void GPUCommandEncoder::copyBufferToBuffer(jsg::Ref<GPUBuffer> source,
+                                           GPUSize64 sourceOffset,
+                                           jsg::Ref<GPUBuffer> destination,
+                                           GPUSize64 destinationOffset,
+                                           GPUSize64 size) {
+
+  encoder_.CopyBufferToBuffer(*source, sourceOffset, *destination,
+                              destinationOffset, size);
+};
+
 jsg::Ref<GPUComputePassEncoder> GPUCommandEncoder::beginComputePass(
     jsg::Optional<GPUComputePassDescriptor> descriptor) {
 

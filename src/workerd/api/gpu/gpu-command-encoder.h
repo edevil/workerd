@@ -13,12 +13,18 @@ namespace workerd::api::gpu {
 class GPUCommandEncoder : public jsg::Object {
 public:
   explicit GPUCommandEncoder(wgpu::CommandEncoder e) : encoder_(kj::mv(e)){};
-  JSG_RESOURCE_TYPE(GPUCommandEncoder) { JSG_METHOD(beginComputePass); }
+  JSG_RESOURCE_TYPE(GPUCommandEncoder) {
+    JSG_METHOD(beginComputePass);
+    JSG_METHOD(copyBufferToBuffer);
+  }
 
 private:
   wgpu::CommandEncoder encoder_;
   jsg::Ref<GPUComputePassEncoder>
   beginComputePass(jsg::Optional<GPUComputePassDescriptor> descriptor);
+  void copyBufferToBuffer(jsg::Ref<GPUBuffer> source, GPUSize64 sourceOffset,
+                          jsg::Ref<GPUBuffer> destination,
+                          GPUSize64 destinationOffset, GPUSize64 size);
 };
 
 struct GPUCommandEncoderDescriptor {

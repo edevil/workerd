@@ -182,5 +182,21 @@ export const read_sync_stack = {
     const workgroupCountY = Math.ceil(secondMatrix[1] / 8);
     passEncoder.dispatchWorkgroups(workgroupCountX, workgroupCountY);
     passEncoder.end();
+
+    // Get a GPU buffer for reading in an unmapped state.
+    const gpuReadBuffer = device.createBuffer({
+      size: resultMatrixBufferSize,
+      usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ,
+    });
+    ok(gpuReadBuffer);
+
+    // Encode commands for copying buffer to buffer.
+    commandEncoder.copyBufferToBuffer(
+      resultMatrixBuffer /* source buffer */,
+      0 /* source offset */,
+      gpuReadBuffer /* destination buffer */,
+      0 /* destination offset */,
+      resultMatrixBufferSize /* size */
+    );
   },
 };
