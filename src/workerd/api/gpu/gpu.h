@@ -57,6 +57,6 @@ private:
       api::gpu::GPUComputePassDescriptor, api::gpu::GPUQuerySet,               \
       api::gpu::GPUQuerySetDescriptor, api::gpu::GPUComputePassTimestampWrite, \
       api::gpu::GPUCommandBufferDescriptor, api::gpu::GPUCommandBuffer,        \
-      api::gpu::GPUQueue
+      api::gpu::GPUQueue, api::gpu::GPUMapMode
 
 }; // namespace workerd::api::gpu

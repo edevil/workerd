@@ -28,6 +28,16 @@ using GPUCompareFunction = kj::String;
 using GPUSize32 = uint32_t;
 using GPUBufferDynamicOffset = uint32_t;
 
+struct GPUMapMode : public jsg::Object {
+  static constexpr GPUFlagsConstant READ = 0x0001;
+  static constexpr GPUFlagsConstant WRITE = 0x0002;
+
+  JSG_RESOURCE_TYPE(GPUMapMode) {
+    JSG_STATIC_CONSTANT(READ);
+    JSG_STATIC_CONSTANT(WRITE);
+  }
+};
+
 struct GPUShaderStage : public jsg::Object {
   static constexpr GPUFlagsConstant VERTEX = 0x1;
   static constexpr GPUFlagsConstant FRAGMENT = 0x2;

@@ -204,5 +204,8 @@ export const read_sync_stack = {
     ok(gpuCommands);
 
     device.queue.submit([gpuCommands]);
+
+    // Read buffer.
+    await gpuReadBuffer.mapAsync(GPUMapMode.READ);
   },
 };
