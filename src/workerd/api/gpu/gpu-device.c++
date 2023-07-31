@@ -9,6 +9,7 @@
 #include "gpu-command-encoder.h"
 #include "gpu-sampler.h"
 #include "gpu-utils.h"
+#include "gpu-queue.h"
 #include "workerd/jsg/exception.h"
 
 namespace workerd::api::gpu {
@@ -289,6 +290,11 @@ GPUDevice::createComputePipeline(GPUComputePipelineDescriptor descriptor) {
 
   auto pipeline = device_.CreateComputePipeline(&desc);
   return jsg::alloc<GPUComputePipeline>(kj::mv(pipeline));
+}
+
+jsg::Ref<GPUQueue> GPUDevice::getQueue() {
+  auto queue = device_.GetQueue();
+  return jsg::alloc<GPUQueue>(kj::mv(queue));
 }
 
 } // namespace workerd::api::gpu

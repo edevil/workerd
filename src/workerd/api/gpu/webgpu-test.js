@@ -202,5 +202,7 @@ export const read_sync_stack = {
     // Submit GPU commands.
     const gpuCommands = commandEncoder.finish();
     ok(gpuCommands);
+
+    device.queue.submit([gpuCommands]);
   },
 };
