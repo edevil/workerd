@@ -12,26 +12,36 @@ namespace workerd::api::gpu {
 
 class GPUError : public jsg::Object {
 public:
-  explicit GPUError(kj::String m) : message_(kj::mv(m)){};
-  JSG_RESOURCE_TYPE(GPUError) {
-    JSG_READONLY_PROTOTYPE_PROPERTY(message, getMessage);
+  explicit GPUError(kj::String m) : message_(kj::mv(m)) {
+    KJ_DBG("GPU ERROR CONSTRUCTOR", message_);
+  };
+  JSG_RESOURCE_TYPE(GPUError) { JSG_READONLY_PROTOTYPE_PROPERTY(message, getMessage); }
+
+  kj::StringPtr getMessage() {
+    KJ_DBG("GPU ERROR Property", message_);
+    return message_;
   }
 
 private:
   kj::String message_;
-  kj::StringPtr getMessage() { return message_; }
 };
 
-class GPUOOMError : public GPUError {
+class GPUOutOfMemoryError : public GPUError {
 public:
   using GPUError::GPUError;
-  JSG_RESOURCE_TYPE(GPUOOMError) { JSG_INHERIT(GPUError); }
+  JSG_RESOURCE_TYPE(GPUOutOfMemoryError) { JSG_INHERIT(GPUError); }
 };
 
 class GPUValidationError : public GPUError {
 public:
   using GPUError::GPUError;
   JSG_RESOURCE_TYPE(GPUValidationError) { JSG_INHERIT(GPUError); }
+};
+
+class GPUInternalError : public GPUError {
+public:
+  using GPUError::GPUError;
+  JSG_RESOURCE_TYPE(GPUInternalError) { JSG_INHERIT(GPUError); }
 };
 
 class GPUDeviceLostInfo : public jsg::Object {
